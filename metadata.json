@@ -1,0 +1,6 @@
+{
+  "name": "BIBIAC SMS Portal",
+  "description": "A bulk SMS campaign management system and interactive notification alert terminal with Twilio, Africa's Talking integrations, and a live client-side device simulator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
