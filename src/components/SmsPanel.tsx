@@ -76,7 +76,7 @@ export const SmsPanel: React.FC<SmsPanelProps> = ({
         const name = t ? t.name.split(' ')[0] : 'Resident';
         const unit = t ? t.group : '[Unit]';
         const balance = t ? t.balance : '0';
-        return `Dear ${name}, your monthly rent schedule of $${t?.rentAmount || '1,200'} for Unit ${unit} is due. Current balance is $${balance}. Please settle by the 1st. Thank you!`;
+        return `Dear ${name}, your monthly rent schedule of Ksh ${t?.rentAmount || '25,000'} for Unit ${unit} is due. Current balance is Ksh ${balance}. Please settle by the 1st. Thank you!`;
       }
     },
     {
@@ -112,7 +112,7 @@ export const SmsPanel: React.FC<SmsPanelProps> = ({
     // Formulate a robust prompt to represent tenant data
     let tenantContext = '';
     if (activeTenant) {
-      tenantContext = ` to tenant ${activeTenant.name} living in Unit ${activeTenant.group} who has a rent balance of $${activeTenant.balance} on a monthly rate of $${activeTenant.rentAmount}`;
+      tenantContext = ` to tenant ${activeTenant.name} living in Unit ${activeTenant.group} who has a rent balance of Ksh ${activeTenant.balance} on a monthly rate of Ksh ${activeTenant.rentAmount}`;
     }
 
     const compiledPrompt = `${aiPrompt}${tenantContext}`;

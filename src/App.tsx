@@ -24,11 +24,11 @@ import { SmsPanel } from './components/SmsPanel';
 
 // Pre-seeded professional property rent units and contracts
 const INITIAL_CONTACTS: Contact[] = [
-  { id: 'c1', name: 'Saruni Lenolkulal', phone: '+254711223344', group: 'A1', rentAmount: 1200, balance: 0, createdAt: '2026-05-23T12:00:00Z' },
-  { id: 'c2', name: 'Dennis Kiprop', phone: '+254722334455', group: 'B4', rentAmount: 950, balance: 350, createdAt: '2026-05-23T12:05:00Z' },
-  { id: 'c3', name: 'Zahra Welimo', phone: '+254733445566', group: 'C2', rentAmount: 1500, balance: 1500, createdAt: '2026-05-23T12:10:00Z' },
-  { id: 'c4', name: 'Audrey Omwamba', phone: '+254744556677', group: 'D3', rentAmount: 1100, balance: 0, createdAt: '2026-05-23T12:15:00Z' },
-  { id: 'c5', name: 'Michael Vance', phone: '+14155552671', group: 'E1', rentAmount: 1800, balance: 150, createdAt: '2026-05-23T12:20:00Z' },
+  { id: 'c1', name: 'Saruni Lenolkulal', phone: '+254711223344', group: '1B-01', rentAmount: 1200, balance: 0, createdAt: '2026-05-23T12:00:00Z' },
+  { id: 'c2', name: 'Dennis Kiprop', phone: '+254722334455', group: 'BS-1', rentAmount: 950, balance: 350, createdAt: '2026-05-23T12:05:00Z' },
+  { id: 'c3', name: 'Zahra Welimo', phone: '+254733445566', group: '1B-02', rentAmount: 1500, balance: 1500, createdAt: '2026-05-23T12:10:00Z' },
+  { id: 'c4', name: 'Audrey Omwamba', phone: '+254744556677', group: 'SR-1', rentAmount: 1100, balance: 0, createdAt: '2026-05-23T12:15:00Z' },
+  { id: 'c5', name: 'Michael Vance', phone: '+14155552671', group: '1B-03', rentAmount: 1800, balance: 150, createdAt: '2026-05-23T12:20:00Z' },
 ];
 
 const INITIAL_LOGS: SmsLog[] = [
@@ -36,7 +36,7 @@ const INITIAL_LOGS: SmsLog[] = [
     id: 'log-1', 
     recipientName: 'Saruni Lenolkulal', 
     recipientPhone: '+254711223344', 
-    message: 'Dear Saruni, your monthly rent of $1,200 for Unit A1 has been successfully recorded. Enjoy your home!', 
+    message: 'Dear Saruni, your monthly rent of $1,200 for Unit 1B-01 has been successfully recorded. Enjoy your home!', 
     provider: 'simulator', 
     status: 'delivered', 
     timestamp: '2026-05-23T20:45:00Z' 
@@ -45,7 +45,7 @@ const INITIAL_LOGS: SmsLog[] = [
     id: 'log-2', 
     recipientName: 'Zahra Welimo', 
     recipientPhone: '+254733445566', 
-    message: 'Dear Zahra, your rent of $1,500 for Unit C2 is due. Current arrears: $1,500. Please clear by 1st.', 
+    message: 'Dear Zahra, your rent of $1,500 for Unit 1B-02 is due. Current arrears: $1,500. Please clear by 1st.', 
     provider: 'simulator', 
     status: 'delivered', 
     timestamp: '2026-05-23T21:00:00Z' 
@@ -53,12 +53,15 @@ const INITIAL_LOGS: SmsLog[] = [
 ];
 
 // Defined fixed standard apartment units mapped to our properties
+// 2 Single Rooms (SR-1, SR-2), 2 Bedsitters (BS-1, BS-2), and 21 One Bedroom units (1B-01 to 1B-21)
 const AVAILABLE_UNITS = [
-  'A1', 'A2', 'A3', 'A4', 'A5',
-  'B1', 'B2', 'B3', 'B4', 'B5',
-  'C1', 'C2', 'C3', 'C4', 'C5',
-  'D1', 'D2', 'D3', 'D4', 'D5',
-  'E1', 'E2', 'E3', 'E4', 'E5'
+  'SR-1', 'SR-2', 
+  'BS-1', 'BS-2', 
+  '1B-01', '1B-02', '1B-03', '1B-04', '1B-05', 
+  '1B-06', '1B-07', '1B-08', '1B-09', '1B-10', 
+  '1B-11', '1B-12', '1B-13', '1B-14', '1B-15', 
+  '1B-16', '1B-17', '1B-18', '1B-19', '1B-20', 
+  '1B-21'
 ];
 
 export default function App() {
@@ -67,12 +70,12 @@ export default function App() {
   
   // Contacts and logs state
   const [contacts, setContacts] = useState<Contact[]>(() => {
-    const saved = localStorage.getItem('bibiac_contacts_v2');
+    const saved = localStorage.getItem('bibiac_contacts_v3');
     return saved ? JSON.parse(saved) : INITIAL_CONTACTS;
   });
 
   const [smsLogs, setSmsLogs] = useState<SmsLog[]>(() => {
-    const saved = localStorage.getItem('bibiac_sms_logs_v2');
+    const saved = localStorage.getItem('bibiac_sms_logs_v3');
     return saved ? JSON.parse(saved) : INITIAL_LOGS;
   });
 

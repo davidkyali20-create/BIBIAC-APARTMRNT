@@ -45,8 +45,10 @@ export const AddTenantForm: React.FC<AddTenantFormProps> = ({
     }
 
     // Phone format recommendation
-    if (!phone.startsWith('+')) {
-      setErrorMsg('Please enter a global phone format starting with country code (e.g., +254... or +1...)');
+    const cleanPhone = phone.trim();
+    const isValidPhone = cleanPhone.startsWith('+') || cleanPhone.startsWith('07') || cleanPhone.startsWith('01');
+    if (!isValidPhone) {
+      setErrorMsg('Please enter a valid phone format starting with country code (e.g. +254...) or local numbers (e.g. 07... or 01...)');
       return;
     }
 
@@ -77,14 +79,14 @@ export const AddTenantForm: React.FC<AddTenantFormProps> = ({
     // Success dispatch
     onAddTenant({
       name: name.trim(),
-      phone: phone.trim(),
+      phone: cleanPhone,
       group: assignedUnit,
       rentAmount: rentPrice,
       balance: initialBalance,
     });
 
     // Notify user
-    setSuccessMsg(`Success! Onboarded ${name.trim()} successfully and assigned Unit ${assignedUnit} with $${rentPrice}/mo rate.`);
+    setSuccessMsg(`Success! Onboarded ${name.trim()} successfully and assigned Unit ${assignedUnit} with Ksh ${rentPrice}/mo rate.`);
     
     // Reset forms
     setName('');
@@ -203,30 +205,30 @@ export const AddTenantForm: React.FC<AddTenantFormProps> = ({
         {/* Rent rate & Starting balance */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[10.5px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">Monthly Rent Rate ($)</label>
+            <label className="block text-[10.5px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">Monthly Rent Rate (Ksh)</label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500 font-bold">$</span>
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500 font-bold font-mono">Ksh</span>
               <input
                 type="number"
-                placeholder="1200"
+                placeholder="25000"
                 value={rent}
                 onChange={(e) => setRent(e.target.value)}
-                className="w-full bg-[#0B0E14] border border-[#1E293B] rounded-lg pl-7 pr-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors font-mono"
+                className="w-full bg-[#0B0E14] border border-[#1E293B] rounded-lg pl-12 pr-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors font-mono"
               />
             </div>
-            <span className="text-[10px] text-slate-500 block mt-1">Default portfolio standard is $1,200/mo</span>
+            <span className="text-[10px] text-slate-500 block mt-1">Default billing rent standard currency is Ksh</span>
           </div>
 
           <div>
-            <label className="block text-[10.5px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">Outstanding Opening Balance ($)</label>
+            <label className="block text-[10.5px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">Outstanding Opening Balance (Ksh)</label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500 font-bold">$</span>
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500 font-bold font-mono">Ksh</span>
               <input
                 type="number"
                 placeholder="0"
                 value={balance}
                 onChange={(e) => setBalance(e.target.value)}
-                className="w-full bg-[#0B0E14] border border-[#1E293B] rounded-lg pl-7 pr-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors font-mono"
+                className="w-full bg-[#0B0E14] border border-[#1E293B] rounded-lg pl-12 pr-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors font-mono"
               />
             </div>
             <span className="text-[10px] text-slate-500 block mt-1">Specify outstanding arrears (Set 0 for fully paid)</span>

@@ -133,14 +133,14 @@ export const TenantDirectory: React.FC<TenantDirectoryProps> = ({
                     
                     {/* Monthly Rent */}
                     <td className="py-4 px-4 text-right font-semibold text-white font-mono">
-                      ${tenant.rentAmount?.toLocaleString() || '0'}
+                      Ksh {tenant.rentAmount?.toLocaleString() || '0'}
                     </td>
                     
                     {/* Balance */}
                     <td className="py-4 px-4 text-right font-mono">
                       {isEditing ? (
                         <div className="flex items-center justify-end gap-1">
-                          <span className="text-slate-500">$</span>
+                          <span className="text-slate-500 font-mono text-[10px]">Ksh</span>
                           <input
                             type="text"
                             value={tempBalance}
@@ -163,7 +163,7 @@ export const TenantDirectory: React.FC<TenantDirectoryProps> = ({
                         <div className="flex flex-col items-end gap-1">
                           <div className="flex items-center gap-1.5">
                             <span className={`font-bold ${tenant.balance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
-                              ${tenant.balance.toLocaleString()}
+                              Ksh {tenant.balance.toLocaleString()}
                             </span>
                             <button
                               onClick={() => handleStartEditing(tenant)}
@@ -180,9 +180,9 @@ export const TenantDirectory: React.FC<TenantDirectoryProps> = ({
                                 setActivePaymentId(tenant.id);
                                 setPaymentAmount(tenant.balance.toString());
                               }}
-                              className="text-[9.5px] font-mono font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity bg-emerald-500/10 hover:bg-emerald-500/20 px-1.5 py-0.2 rounded border border-emerald-500/20 cursor-pointer"
+                              className="text-[9.5px] font-mono font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity bg-emerald-500/10 hover:bg-emerald-500/20 px-1.5 py-0.5 rounded border border-emerald-500/20 cursor-pointer"
                             >
-                              <DollarSign className="w-2.5 h-2.5" /> Settle
+                              Settle Rent
                             </button>
                           )}
 

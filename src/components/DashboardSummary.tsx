@@ -52,10 +52,10 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
           </div>
           <div>
             <h3 className="text-3xl font-sans font-bold tracking-tight text-white">
-              ${totalRentCollected.toLocaleString()}
+              Ksh {totalRentCollected.toLocaleString()}
             </h3>
             <div className="mt-3 flex items-center justify-between text-xs">
-              <span className="text-slate-500 font-mono">Of ${totalRentPotential.toLocaleString()} invoice total</span>
+              <span className="text-slate-500 font-mono">Of Ksh {totalRentPotential.toLocaleString()} invoice total</span>
               <span className="text-emerald-400 font-mono font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full">{rentCollectedPercent}%</span>
             </div>
             {/* Visual Progress Bar */}
@@ -79,7 +79,7 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
           </div>
           <div>
             <h3 className="text-3xl font-sans font-bold tracking-tight text-white">
-              ${totalPendingBalance.toLocaleString()}
+              Ksh {totalPendingBalance.toLocaleString()}
             </h3>
             <div className="mt-3 flex items-center justify-between text-xs">
               <span className="text-slate-500 font-mono">{unpaidTenants.length} tenants with overdue fees</span>
@@ -165,13 +165,13 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
                     <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-2">
                       <span>{tenant.phone}</span>
                       <span className="text-slate-600">•</span>
-                      <span>Rate: ${tenant.rentAmount}/mo</span>
+                      <span>Rate: Ksh {tenant.rentAmount}/mo</span>
                     </div>
                   </div>
                   
                   <div className="text-right flex items-center gap-3">
                     <div>
-                      <p className="text-amber-400 text-xs font-bold font-mono">${tenant.balance.toLocaleString()}</p>
+                      <p className="text-amber-400 text-xs font-bold font-mono">Ksh {tenant.balance.toLocaleString()}</p>
                       <p className="text-[9px] text-slate-500 font-mono">Unpaid</p>
                     </div>
                     <button
@@ -191,40 +191,77 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
 
         {/* Vacancy Status Map Column */}
         <div className="bg-[#111827] border border-[#1E293B] rounded-xl p-5 shadow-lg flex flex-col">
-          <div className="mb-4 pb-3 border-b border-slate-800">
-            <h4 className="font-sans font-bold text-slate-100 text-sm">Leasing Directory Map</h4>
-            <p className="text-xs text-slate-400 mt-0.5">Visual map of apartment occupation and fast vacancies</p>
+          <div className="mb-4 pb-3 border-b border-slate-800 flex justify-between items-end">
+            <div>
+              <h4 className="font-sans font-bold text-slate-100 text-sm">Leasing Directory Map</h4>
+              <p className="text-xs text-slate-400 mt-0.5">Visual map of apartment occupation and fast vacancies</p>
+            </div>
+            {/* Tiny Map Legend */}
+            <div className="flex gap-2 text-[8px] font-mono uppercase font-bold">
+              <span className="flex items-center gap-1 text-sky-400"><span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span> SR</span>
+              <span className="flex items-center gap-1 text-amber-400"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> BS</span>
+              <span className="flex items-center gap-1 text-violet-400"><span className="w-1.5 h-1.5 rounded-full bg-violet-500"></span> 1B</span>
+            </div>
           </div>
 
           {/* Grid Map represent each unit */}
           <div className="grid grid-cols-5 gap-3 mb-5">
             {availableUnits.map((unitNum) => {
               const occupant = contacts.find(c => c.group.toUpperCase().replace('UNIT ', '').trim() === unitNum);
+              const isSR = unitNum.startsWith('SR-');
+              const isBS = unitNum.startsWith('BS-');
+              
+              // Custom colors based on house classification
+              let borderClass = 'border-slate-800 hover:border-slate-600';
+              let bgClass = 'bg-[#0B0E14] text-slate-500';
+              let typeLabelColor = 'text-slate-500';
+              let badgeText = isSR ? 'Single Room' : isBS ? 'Bedsitter' : '1 Bedroom';
+
+              if (occupant) {
+                if (isSR) {
+                  borderClass = 'border-sky-500/30';
+                  bgClass = 'bg-sky-950/20 text-sky-400';
+                  typeLabelColor = 'text-sky-400';
+                } else if (isBS) {
+                  borderClass = 'border-amber-500/30';
+                  bgClass = 'bg-amber-950/20 text-amber-400';
+                  typeLabelColor = 'text-amber-400';
+                } else {
+                  borderClass = 'border-indigo-500/30';
+                  bgClass = 'bg-indigo-950/20 text-indigo-400';
+                  typeLabelColor = 'text-indigo-400';
+                }
+              }
+
               return (
                 <div 
                   key={unitNum} 
-                  className={`border rounded-lg p-2 text-center transition-all relative group leading-none flex flex-col justify-center items-center h-14 ${
-                    occupant 
-                      ? 'bg-indigo-950/15 border-indigo-500/20 text-indigo-400' 
-                      : 'bg-[#0B0E14] border-dashed border-slate-800 text-slate-600 hover:border-slate-600'
-                  }`}
+                  className={`border rounded-lg p-2 text-center transition-all relative group leading-none flex flex-col justify-center items-center h-14 ${borderClass} ${bgClass}`}
                 >
                   <span className="font-mono font-bold text-xs">{unitNum}</span>
-                  <span className={`text-[8.5px] uppercase font-bold tracking-tight mt-1 ${occupant ? 'text-indigo-400' : 'text-slate-500'}`}>
-                    {occupant ? 'Occupied' : 'Vacant'}
+                  <span className={`text-[8px] uppercase font-bold tracking-tight mt-1 ${occupant ? typeLabelColor : 'text-slate-500/80'}`}>
+                    {occupant ? 'Leased' : 'Vacant'}
                   </span>
                   
                   {/* Hover tooltip for occupants */}
-                  {occupant && (
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-[#1E293B] text-white text-[10px] p-2.5 rounded shadow-xl border border-slate-700 w-36 pointer-events-none opacity-0 group-hover:opacity-100 transition-all z-20 font-sans text-left leading-normal">
-                      <p className="font-bold">{occupant.name}</p>
-                      <p className="text-slate-400 text-[9px] mt-0.5">Phone: {occupant.phone}</p>
-                      <p className="text-slate-400 text-[9px]">Rent: ${occupant.rentAmount}/mo</p>
-                      <p className={`text-[9px] font-bold ${occupant.balance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
-                        Bal: ${occupant.balance}
-                      </p>
-                    </div>
-                  )}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-[#1E293B] text-white text-[10px] p-2.5 rounded shadow-xl border border-slate-700 w-44 pointer-events-none opacity-0 group-hover:opacity-100 transition-all z-20 font-sans text-left leading-normal">
+                    <p className="font-bold flex justify-between">
+                      <span>{unitNum}</span>
+                      <span className="text-[8px] text-slate-400 uppercase font-mono">{badgeText}</span>
+                    </p>
+                    {occupant ? (
+                      <>
+                        <p className="text-white text-[11px] mt-1.5 font-semibold">• {occupant.name}</p>
+                        <p className="text-slate-400 text-[9px] mt-1">Phone: {occupant.phone}</p>
+                        <p className="text-slate-400 text-[9px]">Rent Rate: Ksh {occupant.rentAmount}/mo</p>
+                        <p className={`text-[9px] font-bold ${occupant.balance > 0 ? 'text-amber-400 animate-pulse' : 'text-emerald-400'}`}>
+                          Due: Ksh {occupant.balance}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-emerald-400 text-[9px] mt-1 italic">Immediate availability - click Add Tab to lease</p>
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -233,15 +270,35 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
           <div className="mt-auto bg-[#0B0E14] border border-[#1E293B] rounded-lg p-3 text-xs leading-relaxed space-y-1 text-slate-400">
             <p className="font-bold text-white flex items-center gap-1.5 mb-1.5 text-[11px]">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>
-              Lease Insights
+              Lease Insights (25 Units Total Classification)
             </p>
-            <div className="flex justify-between">
-              <span>Occupied Housing Units (Assigned):</span>
-              <span className="font-bold text-white font-mono">{occupiedUnitsCount}</span>
+            <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-slate-800/60 mb-1.5">
+              <div className="bg-[#111827] p-1.5 rounded text-center border border-slate-800/60">
+                <span className="text-[9px] text-sky-400/80 uppercase font-bold block">Single Rooms</span>
+                <span className="font-mono font-bold text-[11px] text-white">
+                  {availableUnits.filter(u => u.startsWith('SR-') && occupiedUnits.includes(u)).length} / 2 leased
+                </span>
+              </div>
+              <div className="bg-[#111827] p-1.5 rounded text-center border border-slate-800/60">
+                <span className="text-[9px] text-amber-400/80 uppercase font-bold block">Bedsitters</span>
+                <span className="font-mono font-bold text-[11px] text-white">
+                  {availableUnits.filter(u => u.startsWith('BS-') && occupiedUnits.includes(u)).length} / 2 leased
+                </span>
+              </div>
+              <div className="bg-[#111827] p-1.5 rounded text-center border border-slate-800/60">
+                <span className="text-[9px] text-indigo-400/80 uppercase font-bold block">1-Bedrooms</span>
+                <span className="font-mono font-bold text-[11px] text-white">
+                  {availableUnits.filter(u => u.startsWith('1B-') && occupiedUnits.includes(u)).length} / 21 leased
+                </span>
+              </div>
             </div>
             <div className="flex justify-between">
-              <span>Vacant Housing Units (Lease-Ready):</span>
-              <span className="font-bold text-emerald-400 font-mono">{vacantUnits.length}</span>
+              <span>Overall Occupied (Assigned):</span>
+              <span className="font-bold text-white font-mono">{occupiedUnitsCount} of 25</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Overall Vacant (Lease-Ready):</span>
+              <span className="font-bold text-emerald-400 font-mono">{vacantUnits.length} of 25</span>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 {
-  "name": "BIBIAC SMS Portal",
-  "description": "A bulk SMS campaign management system and interactive notification alert terminal with Twilio, Africa's Talking integrations, and a live client-side device simulator.",
+  "name": "BIBIAC Portfolio Manager",
+  "description": "A premium SaaS property and tenant management dashboard with automated SMS leasing notifications, financial tracking, and smart templates.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
