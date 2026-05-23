@@ -349,7 +349,7 @@ export const SmsComposer: React.FC<SmsComposerProps> = ({
                 key={idx}
                 type="button"
                 onClick={() => insertTemplateText(tmpl.text)}
-                className="text-[9px] font-mono border border-[#1E293B] bg-[#0B0E14] hover:bg-emerald-550/10 hover:border-emerald-500/30 text-slate-300 rounded px-2 py-0.5 transition-colors whitespace-nowrap"
+                className="text-[9px] font-mono border border-[#1E293B] bg-[#0B0E14] hover:bg-emerald-500/10 hover:border-emerald-500/30 text-slate-300 rounded px-2 py-0.5 transition-colors whitespace-nowrap"
               >
                 {tmpl.label}
               </button>

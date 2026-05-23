@@ -603,7 +603,7 @@ Open your browser and navigate to the local portal:
   });
 
   return (
-    <div className="bg-[#0B0E14] text-slate-350 min-h-screen flex flex-col font-sans overflow-x-hidden select-none select-text pb-10">
+    <div className="bg-[#0B0E14] text-slate-300 min-h-screen flex flex-col font-sans overflow-x-hidden select-none select-text pb-10">
       
       {/* HEADER BAR CONSOLE */}
       <header id="control-header-panel" className="h-14 border-b border-[#1E293B] bg-[#111827] flex items-center px-6 justify-between shrink-0">
@@ -612,22 +612,12 @@ Open your browser and navigate to the local portal:
           <span className="font-mono text-sm tracking-widest text-white uppercase font-bold">BIBIAC_SYSTEM // SMS PORTAL CONTROL</span>
         </div>
 
-        {/* Global Operational Tabs */}
-        <div className="flex gap-2">
-          <button 
-            id="tab-select-control"
-            onClick={() => setActiveTab('control')}
-            className={`px-4 py-1.5 font-mono text-xs uppercase tracking-wider rounded transition-all cursor-pointer font-semibold ${activeTab === 'control' ? 'bg-emerald-600 text-white' : 'hover:bg-[#1E293B] text-slate-400'}`}
-          >
-            📟 Control Terminal
-          </button>
-          <button 
-            id="tab-select-workspace"
-            onClick={() => setActiveTab('workspace')}
-            className={`px-4 py-1.5 font-mono text-xs uppercase tracking-wider rounded transition-all cursor-pointer font-semibold ${activeTab === 'workspace' ? 'bg-indigo-600 text-white' : 'hover:bg-[#1E293B] text-slate-400'}`}
-          >
-            📂 Local Setup Walkthrough
-          </button>
+        {/* Gateway Connection Active Badge */}
+        <div className="flex gap-2 font-mono">
+          <span className="flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1 rounded border border-emerald-500/20 font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            CLOUD CONSOLE SBOX ACTIVE
+          </span>
         </div>
 
         <div className="hidden md:flex gap-6 text-[11px] font-mono uppercase tracking-tighter opacity-75">
@@ -643,55 +633,43 @@ Open your browser and navigate to the local portal:
         {/* PIPELINE SIDEBAR (Setup pipeline steps status guide) */}
         <aside id="pipeline-sidebar-panel" className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-[#1E293B] bg-[#0F172A] p-5 flex flex-col gap-6 shrink-0 z-10">
           <div>
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 font-mono">Setup Workflow Pipeline</p>
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 font-mono">Internal Cloud Sandbox Status</p>
             <div className="relative border-l-2 border-[#1E293B] ml-2 space-y-6">
               
               {/* Step 1 */}
-              <div 
-                className="relative pl-5 cursor-pointer hover:opacity-100 transition-opacity"
-                onClick={() => { setActiveTab('workspace'); setSidebarStep(1); setSelectedFileCode('app.py'); }}
-              >
-                <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center ${sidebarStep >= 1 ? 'border-emerald-500' : 'border-slate-800'}`}>
-                  {sidebarStep > 1 && <div className="w-1 h-1 bg-emerald-500 rounded-full"></div>}
+              <div className="relative pl-5">
+                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center border-emerald-500">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
                 </div>
-                <p className={`text-xs font-mono font-bold uppercase leading-tight ${sidebarStep === 1 ? 'text-indigo-400' : 'text-slate-300'}`}>01. File Structure</p>
-                <p className="text-[10px] text-slate-500 font-mono">Create bibiac_system folder</p>
+                <p className="text-xs font-mono font-bold uppercase leading-tight text-emerald-400">01. Vite + Express Core</p>
+                <p className="text-[10px] text-slate-500 font-mono">Running Node.js Live Daemon</p>
               </div>
 
               {/* Step 2 */}
-              <div 
-                className="relative pl-5 cursor-pointer hover:opacity-100 transition-opacity"
-                onClick={() => { setActiveTab('workspace'); setSidebarStep(2); }}
-              >
-                <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center ${sidebarStep >= 2 ? 'border-emerald-500' : 'border-slate-800'}`}>
-                  {sidebarStep > 2 && <div className="w-1 h-1 bg-emerald-500 rounded-full"></div>}
+              <div className="relative pl-5">
+                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center border-emerald-500">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
                 </div>
-                <p className={`text-xs font-mono font-bold uppercase leading-tight ${sidebarStep === 2 ? 'text-indigo-400' : 'text-slate-300'}`}>02. API Credentials</p>
-                <p className="text-[10px] text-slate-500 font-mono">Twilio / Africa's Talking</p>
+                <p className="text-xs font-mono font-bold uppercase leading-tight text-emerald-400">02. API Gateway proxy</p>
+                <p className="text-[10px] text-slate-500 font-mono">Natively routed under /api/*</p>
               </div>
 
               {/* Step 3 */}
-              <div 
-                className="relative pl-5 cursor-pointer hover:opacity-100 transition-opacity"
-                onClick={() => { setActiveTab('workspace'); setSidebarStep(3); }}
-              >
-                <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center ${sidebarStep >= 3 ? 'border-amber-500' : 'border-slate-800'}`}>
-                  {sidebarStep > 3 && <div className="w-1 h-1 bg-emerald-500 rounded-full"></div>}
+              <div className="relative pl-5">
+                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center border-emerald-500">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
                 </div>
-                <p className={`text-xs font-mono font-bold uppercase leading-tight ${sidebarStep === 3 ? 'text-indigo-400' : 'text-slate-300'}`}>03. Dependencies</p>
-                <p className="text-[10px] text-slate-500 font-mono">pip install requirements</p>
+                <p className="text-xs font-mono font-bold uppercase leading-tight text-emerald-400">03. SMS Core Simulator</p>
+                <p className="text-[10px] text-slate-500 font-mono">Active fully in-browser fallback</p>
               </div>
 
               {/* Step 4 */}
-              <div 
-                className="relative pl-5 cursor-pointer hover:opacity-100 transition-opacity"
-                onClick={() => { setActiveTab('workspace'); setSidebarStep(4); }}
-              >
-                <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center ${sidebarStep >= 4 ? 'border-emerald-500' : 'border-slate-800'}`}>
-                  {sidebarStep >= 4 && <div className="w-1 h-1 bg-emerald-500 rounded-full"></div>}
+              <div className="relative pl-5">
+                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 bg-[#0F172A] flex items-center justify-center border-emerald-500">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
                 </div>
-                <p className={`text-xs font-mono font-bold uppercase leading-tight ${sidebarStep === 4 ? 'text-indigo-400' : 'text-slate-300'}`}>04. Local Execution</p>
-                <p className="text-[10px] text-slate-500 font-mono">Run Python Flask web app</p>
+                <p className="text-xs font-mono font-bold uppercase leading-tight text-emerald-400">04. Workspace Frame</p>
+                <p className="text-[10px] text-slate-500 font-mono">Live render sandbox ready</p>
               </div>
 
             </div>
@@ -831,7 +809,7 @@ Open your browser and navigate to the local portal:
                             </div>
                             <button 
                               onClick={() => handleDeleteContact(c.id)}
-                              className="text-slate-650 hover:text-red-400 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="text-slate-500 hover:text-red-400 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                               title="Delete recipient contact"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -942,7 +920,7 @@ Open your browser and navigate to the local portal:
                   
                   {/* File explorer visual column */}
                   <div className="w-1/3 border-r border-[#1E293B] pr-3 font-mono text-xs select-none space-y-2">
-                    <p className="text-[10px] text-slate-550 uppercase tracking-wider font-bold mb-2">Folder Tree</p>
+                    <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">Folder Tree</p>
                     <div className="space-y-1">
                       <div className="flex items-center gap-1.5 font-bold text-white">
                         <span>📂</span>
@@ -1187,7 +1165,7 @@ Open your browser and navigate to the local portal:
                   ) : (
                     <button 
                       onClick={stopPythonServerSimulator}
-                      className="flex-1 bg-red-800 hover:bg-red-700 text-white font-mono font-bold uppercase text-[10.5px] py-2 rounded tracking-wider transition-all cursor-pointer flex justify-center items-[#111827] gap-2"
+                      className="flex-1 bg-red-800 hover:bg-red-700 text-white font-mono font-bold uppercase text-[10.5px] py-2 rounded tracking-wider transition-all cursor-pointer flex justify-center items-center gap-2"
                     >
                       ☠️ Terminate Server Local thread
                     </button>
@@ -1204,9 +1182,9 @@ Open your browser and navigate to the local portal:
       {/* FOOTER BAR CONSOLE */}
       <footer id="control-footer-panel" className="h-10 bg-[#0B0E14] border-t border-[#1E293B] px-6 flex items-center justify-between text-[10px] font-mono shrink-0 select-none">
         <div className="flex gap-6">
-          <span className="text-slate-550">Allocated Swap: <span className="text-slate-300">244MB / 8192MB</span></span>
-          <span className="text-slate-550">Cpu Load: <span className="text-slate-300">1.2%</span></span>
-          <span className="text-slate-550">Gsm Gateway Thread: <span className="text-emerald-400 font-bold">ACTIVE</span></span>
+          <span className="text-slate-500">Allocated Swap: <span className="text-slate-300">244MB / 8192MB</span></span>
+          <span className="text-slate-500">Cpu Load: <span className="text-slate-300">1.2%</span></span>
+          <span className="text-slate-500">Gsm Gateway Thread: <span className="text-emerald-400 font-bold">ACTIVE</span></span>
         </div>
         <div className="flex gap-4">
           <span className="text-emerald-500 font-bold">● CLOUD SECURE DEPLOYMENT</span>
