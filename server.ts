@@ -11,6 +11,17 @@ import { GoogleGenAI } from "@google/genai";
 // Load environment variables configured in AI Studio Secrets or local environment
 dotenv.config();
 
+// Helper to retrieve and clean environment variables (trims quotes and whitespace from platform settings)
+function getCleanEnv(key: string): string {
+  const val = process.env[key];
+  if (!val) return "";
+  let s = val.trim();
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+    s = s.slice(1, -1).trim();
+  }
+  return s;
+}
+
 const app = express();
 const PORT = 3000;
 
@@ -20,15 +31,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Initialize the Gemini SDK if key exists
 let aiClient: GoogleGenAI | null = null;
-const api_key = process.env.GEMINI_API_KEY;
 
 function getGeminiClient(): GoogleGenAI {
   if (!aiClient) {
-    if (!api_key) {
+    const key = getCleanEnv("GEMINI_API_KEY");
+    if (!key) {
       throw new Error("GEMINI_API_KEY environment variable is not defined.");
     }
     aiClient = new GoogleGenAI({
-      apiKey: api_key,
+      apiKey: key,
       httpOptions: {
         headers: {
           'User-Agent': 'aistudio-build',
@@ -42,17 +53,17 @@ function getGeminiClient(): GoogleGenAI {
 // 1. API: Check configuration status of the SMS providers and Gemini SDK
 app.get("/api/status", (req: Request, res: Response) => {
   const twilioConfigured = !!(
-    process.env.TWILIO_ACCOUNT_SID &&
-    process.env.TWILIO_AUTH_TOKEN &&
-    process.env.TWILIO_PHONE_NUMBER
+    getCleanEnv("TWILIO_ACCOUNT_SID") &&
+    getCleanEnv("TWILIO_AUTH_TOKEN") &&
+    getCleanEnv("TWILIO_PHONE_NUMBER")
   );
 
   const africasTalkingConfigured = !!(
-    process.env.AT_USERNAME &&
-    process.env.AT_API_KEY
+    getCleanEnv("AT_USERNAME") &&
+    getCleanEnv("AT_API_KEY")
   );
 
-  const geminiConfigured = !!process.env.GEMINI_API_KEY;
+  const geminiConfigured = !!getCleanEnv("GEMINI_API_KEY");
 
   res.json({
     twilioConfigured,
@@ -112,9 +123,9 @@ app.post("/api/sms/send", async (req: Request, res: Response) => {
     }
 
     if (provider === "twilio") {
-      const accountSid = process.env.TWILIO_ACCOUNT_SID;
-      const authToken = process.env.TWILIO_AUTH_TOKEN;
-      const fromNumber = process.env.TWILIO_PHONE_NUMBER;
+      const accountSid = getCleanEnv("TWILIO_ACCOUNT_SID");
+      const authToken = getCleanEnv("TWILIO_AUTH_TOKEN");
+      const fromNumber = getCleanEnv("TWILIO_PHONE_NUMBER");
 
       if (!accountSid || !authToken || !fromNumber) {
         results.push({
@@ -187,9 +198,9 @@ app.post("/api/sms/send", async (req: Request, res: Response) => {
       }
 
     } else if (provider === "africastalking") {
-      const username = process.env.AT_USERNAME;
-      const apiKey = process.env.AT_API_KEY;
-      const senderId = process.env.AT_SENDER_ID; // optional
+      const username = getCleanEnv("AT_USERNAME");
+      const apiKey = getCleanEnv("AT_API_KEY");
+      const senderId = getCleanEnv("AT_SENDER_ID"); // optional
 
       if (!username || !apiKey) {
         results.push({
