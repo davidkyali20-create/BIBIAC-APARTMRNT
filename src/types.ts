@@ -7,7 +7,9 @@ export interface Contact {
   id: string;
   name: string;
   phone: string;
-  group: string;
+  group: string; // unit / house number (e.g., "Unit A1")
+  rentAmount: number; // rent amount in USD / Ksh
+  balance: number; // outstanding balance
   createdAt: string;
 }
 
