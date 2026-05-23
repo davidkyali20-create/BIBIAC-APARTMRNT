@@ -65,8 +65,23 @@ app.get("/api/status", (req: Request, res: Response) => {
 app.post("/api/sms/send", async (req: Request, res: Response) => {
   const { recipients, message, provider } = req.body;
 
-  if (!recipients || !Array.isArray(recipients) || recipients.length === 0) {
-    res.status(400).json({ error: "Recipients must be a non-empty array of {name, phone}." });
+  let activeRecipients: any[] = [];
+  if (Array.isArray(recipients)) {
+    activeRecipients = recipients;
+  } else if (req.body.recipientName || req.body.recipientPhone) {
+    activeRecipients = [{
+      name: req.body.recipientName || "Custom Contact",
+      phone: req.body.recipientPhone || ""
+    }];
+  } else if (req.body.name || req.body.phone) {
+    activeRecipients = [{
+      name: req.body.name || "Custom Contact",
+      phone: req.body.phone || ""
+    }];
+  }
+
+  if (activeRecipients.length === 0) {
+    res.status(400).json({ error: "Recipients must be a non-empty array of {name, phone} or single recipient details." });
     return;
   }
   if (!message || typeof message !== "string") {
@@ -79,7 +94,7 @@ app.post("/api/sms/send", async (req: Request, res: Response) => {
   // Helper to generate a unique ID
   const generateId = () => Math.random().toString(36).substring(2, 9);
 
-  for (const recipient of recipients) {
+  for (const recipient of activeRecipients) {
     const { name, phone } = recipient;
 
     if (!phone) {
