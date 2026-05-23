@@ -270,7 +270,7 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
           <div className="mt-auto bg-[#0B0E14] border border-[#1E293B] rounded-lg p-3 text-xs leading-relaxed space-y-1 text-slate-400">
             <p className="font-bold text-white flex items-center gap-1.5 mb-1.5 text-[11px]">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>
-              Lease Insights (25 Units Total Classification)
+              Lease Insights (17 Units Total Classification)
             </p>
             <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-slate-800/60 mb-1.5">
               <div className="bg-[#111827] p-1.5 rounded text-center border border-slate-800/60">
@@ -288,17 +288,17 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({
               <div className="bg-[#111827] p-1.5 rounded text-center border border-slate-800/60">
                 <span className="text-[9px] text-indigo-400/80 uppercase font-bold block">1-Bedrooms</span>
                 <span className="font-mono font-bold text-[11px] text-white">
-                  {availableUnits.filter(u => u.startsWith('1B-') && occupiedUnits.includes(u)).length} / 21 leased
+                  {availableUnits.filter(u => u.startsWith('1B-') && occupiedUnits.includes(u)).length} / 13 leased
                 </span>
               </div>
             </div>
             <div className="flex justify-between">
               <span>Overall Occupied (Assigned):</span>
-              <span className="font-bold text-white font-mono">{occupiedUnitsCount} of 25</span>
+              <span className="font-bold text-white font-mono">{occupiedUnitsCount} of 17</span>
             </div>
             <div className="flex justify-between">
               <span>Overall Vacant (Lease-Ready):</span>
-              <span className="font-bold text-emerald-400 font-mono">{vacantUnits.length} of 25</span>
+              <span className="font-bold text-emerald-400 font-mono">{vacantUnits.length} of 17</span>
             </div>
           </div>
         </div>

@@ -53,15 +53,13 @@ const INITIAL_LOGS: SmsLog[] = [
 ];
 
 // Defined fixed standard apartment units mapped to our properties
-// 2 Single Rooms (SR-1, SR-2), 2 Bedsitters (BS-1, BS-2), and 21 One Bedroom units (1B-01 to 1B-21)
+// 2 Single Rooms (SR-1, SR-2), 2 Bedsitters (BS-1, BS-2), and 13 One Bedroom units (1B-01 to 1B-13)
 const AVAILABLE_UNITS = [
   'SR-1', 'SR-2', 
   'BS-1', 'BS-2', 
   '1B-01', '1B-02', '1B-03', '1B-04', '1B-05', 
   '1B-06', '1B-07', '1B-08', '1B-09', '1B-10', 
-  '1B-11', '1B-12', '1B-13', '1B-14', '1B-15', 
-  '1B-16', '1B-17', '1B-18', '1B-19', '1B-20', 
-  '1B-21'
+  '1B-11', '1B-12', '1B-13'
 ];
 
 export default function App() {
